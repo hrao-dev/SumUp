@@ -1,8 +1,9 @@
 
 #  LLM-Based Text & News Summarizer
 
-A modern, intelligent tool that fetches the latest news and delivers concise, high-quality summaries using state-of-the-art Large Language Models (LLMs). Whether you're tracking headlines, conducting research, or building news-driven applications, this tool makes it easy to extract the core message from large volumes of content—fast.
+A modern, intelligent tool using advanced Large Language Models (LLMs) to effortlessly stay updated with the latest news.  
 
+Whether you're keeping up with the news, conducting research, or enhancing your app, it simplifies content digestion and helps you get to the core of any story in seconds.
 ---
 
 ## 📚 Overview
