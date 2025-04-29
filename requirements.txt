@@ -1,0 +1,6 @@
+# requirements.txt file to install app dependencies
+pandas
+numpy
+streamlit
+scikit-learn
+Pillow
