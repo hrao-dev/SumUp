@@ -28,11 +28,11 @@ def main():
         st.markdown('#### Top Stories - A Snapshot ')
         st.caption(f'**Source: Associated Press**')
         for row in summary_df.itertuples():
-            st.write(f'**{row.Title}**')
-            st.write(row.Summary)
-            st.write('URL:', row.URL)
-
-
+            # Display each article's title, summary, and URL
+            container = st.container(border=True)
+            container.write(f'**{row.Title}**')
+            container.write(row.Summary)
+            container.write(row.URL)
 
 # Create and name sidebar for user input 
     st.sidebar.subheader("Paste any article or text below to get a quick summary:")
@@ -42,10 +42,15 @@ def main():
         if input_text:
             # Generate the summary
             summary = summarizer(input_text,max_length=512,do_sample=False)
-            st.subheader("Original Text")
-            st.write(input_text)
-            st.subheader("Abstractive Summary")
-            st.write(summary[0]["summary_text"])
+            st.markdown('#### Original Text ')
+            # Display the original text
+            #st.text_area(label ="",value=input_text, height=200)
+            container = st.container(border=True)
+            container.write(input_text)
+            st.markdown('---')   
+            # Display the summary
+            st.markdown('#### Abstractive Summary ')
+            st.text_area(label ="",value=summary[0]["summary_text"], height=100)
         else:
             st.warning("Enter text to summarize.")
 
