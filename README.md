@@ -6,7 +6,6 @@ Sum Up is an intelligent state-of-the-art summarization engine that streamlines 
 Powered by cutting-edge Large Language Models (LLMs), this summarizer extracts, processes, and condenses information to generate clear, meaningful summaries with the option to explore further.
 
 ---
-
 ## 🚀 Features
 - 📰 **Live News Integration**
  Automatically fetch and summarize the top 10 news headlines using NewsAPI.
@@ -26,6 +25,15 @@ Built with Streamlit, providing an intuitive and responsive UI for real-time sum
 - ⚙️ **Modular & Extendable**
 Supports batch processing, API access, and easy integration into custom workflows or content platforms.
 
+---
+## 🛠️ Tech Stack
+- **Frontend**: Streamlit
+
+- **Backend**: Python, Hugging Face Transformers, Flan-T5
+
+- **APIs**: NewsAPI, Newspaper3k, Requests, BeautifulSoup
+
+- **Model Hosting**: Local / Hugging Face Inference API
 
 ---
 ## 💡 Use Cases
@@ -40,12 +48,3 @@ Supports batch processing, API access, and easy integration into custom workflow
 
 - 🧩 **Platform & Workflow Integration**  
     Automate summarization inside internal tools, CRMs, or content management systems.
-
-## 🛠️ Tech Stack
-- **Frontend**: Streamlit
-
-- **Backend**: Python, Hugging Face Transformers, Flan-T5
-
-- **APIs**: NewsAPI, Newspaper3k, Requests, BeautifulSoup
-
-- **Model Hosting**: Local / Hugging Face Inference API
