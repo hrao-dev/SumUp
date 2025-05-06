@@ -3,4 +3,8 @@ pandas
 numpy
 streamlit
 scikit-learn
-Pillow
+transformers
+torch
+newspaper3k
+requests
+python-dotenv
