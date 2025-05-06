@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 app = FastAPI()
 
 # Initialize the summarization pipeline
-summarizer = pipeline("summarization",model="news-summary-finetuned")
+summarizer = pipeline("summarization",model="harao-ml/news-summary-finetuned")
 
 class TextRequest(BaseModel):
     text: str
