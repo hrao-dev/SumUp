@@ -7,27 +7,31 @@ Powered by cutting-edge Large Language Models (LLMs), this summarizer extracts, 
 
 ---
 ## 🚀 Features
-- 📰 **Live News Integration**
- Automatically fetch and summarize the top 10 news headlines using NewsAPI.
+- 📝 **Versatile Input Support**  
+Summarize **text**, **URLs**, or **.txt/.pdf** files. The system auto-detects and processes input formats seamlessly.
 
-- 📝 **Text & URL Summarization**
-Paste any article or URL to generate concise summaries. Automatically extracts main content from web pages.
+- 🌐 **Web Article Summarization**  
+Extracts core content from webpages, removing ads and extraneous elements, and generates concise summaries.
 
-- ✍️ **LLM-Powered Abstractive Summarization**
- Uses models like Flan-T5 and Hugging Face Transformers to produce high-quality, human-like summaries.
+- 📄 **Document Summarization**  
+Supports file uploads, summarizing long-form documents (text and PDF) with precision.
 
-- 🔗 **Context & Source Linking**
-Every summary includes a link to the original article for transparency and deeper reading.
+- 📰 **Real-Time News Integration**  
+Fetches and summarizes the **top 10 headlines** using **NewsAPI**, keeping users informed with minimal effort.
 
-- 🖥️ **Interactive Web App**
-Built with Streamlit, providing an intuitive and responsive UI for real-time summarization.
+- ✍️ **LLM-Powered Abstractive Summaries**  
+Uses **Flan-T5** and **Hugging Face Transformers** for high-quality, human-like summaries that retain meaning and flow.
 
-- ⚙️ **Modular & Extendable**
-Supports batch processing, API access, and easy integration into custom workflows or content platforms.
+- 🔗 **Source Attribution**  
+Each summary includes a link to the original content, ensuring transparency and easy access to the full article.
+
+- 🖥️ **Gradio-Powered UI**  
+A clean, intuitive web interface built with **Gradio**, enabling real-time text input, file uploads, and URL summarization.
 
 ---
 ## 🛠️ Tech Stack
-- **Frontend**: Streamlit
+
+- **Frontend**: Gradio
 
 - **Backend**: Python, Hugging Face Transformers, Flan-T5
 
