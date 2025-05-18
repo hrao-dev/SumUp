@@ -1,5 +1,5 @@
 
-# SumUp 📰✨ - Stay Informed, Instantly
+# 📰 SumUp!  - Stay Informed, Instantly
 
 Sum Up is an intelligent state-of-the-art summarization engine that streamlines content consumption and delivers key insights from any story in seconds.
 
@@ -42,7 +42,7 @@ A clean, intuitive web interface built with **Gradio**, enabling real-time text 
 ---
 ## 🖥️ Live Demo
 
-Try SumUp instantly in your browser via the Hugging Face Space → harao‑ml/SumUp.
+Try SumUp instantly in your browser via the Hugging Face Space → [harao‑ml/SumUp](https://huggingface.co/spaces/harao-ml/SumUp).
 
 ---
 ## 💡 Use Cases
