@@ -40,6 +40,11 @@ A clean, intuitive web interface built with **Gradio**, enabling real-time text 
 - **Model Hosting**: Local / Hugging Face Inference API
 
 ---
+
+## Architecture 
+![image](https://github.com/user-attachments/assets/410ce4cd-6452-46f9-ad94-6c2fa0ef79e1)
+
+---
 ## 🖥️ Live Demo
 
 Try SumUp instantly in your browser via the Hugging Face Space → [harao‑ml/SumUp](https://huggingface.co/spaces/harao-ml/SumUp).
