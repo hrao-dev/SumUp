@@ -1,14 +1,15 @@
 ---
-title: Streamlit Template Space
+title: SumUp
 emoji: 🚀
 colorFrom: red
 colorTo: red
 sdk: docker
 app_port: 8501
 tags:
-  - streamlit
+- streamlit
 pinned: false
-short_description: Streamlit template space
+short_description: 'Fine-tuned NLP pipeline: summarize, extract, evaluate'
+license: mit
 ---
 
 # Welcome to Streamlit!
