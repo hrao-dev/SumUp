@@ -1,14 +1,17 @@
 ---
-title: SumUp
+title: SumUp Summarize smarter
 emoji: 🚀
-colorFrom: red
-colorTo: red
-sdk: docker
+colorFrom: yellow
+colorTo: green
+sdk: streamlit
 app_port: 8501
 tags:
 - streamlit
+sdk_version: 1.35.0
+app_file: app.py
+python_version: "3.10"
 pinned: false
-short_description: 'Fine-tuned NLP pipeline: summarize, extract, evaluate'
+short_description: 'Document Intelligence: summarize, extract, evaluate'
 license: mit
 ---
 
