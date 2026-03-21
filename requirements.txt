@@ -1,3 +1,13 @@
 altair
-pandas
 streamlit
+transformers==4.44.0
+tokenizers==0.19.1
+torch==2.3.1
+newspaper4k
+PyPDF2
+lxml_html_clean
+keybert
+spacy==3.7.5
+rouge-score
+textstat
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
