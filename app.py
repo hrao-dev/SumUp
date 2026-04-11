@@ -633,9 +633,9 @@ with st.sidebar:
         <div>
             <div style='font-size:.95rem;font-weight:600;
                         color:#D8E0F0;letter-spacing:-.025em;line-height:1.2;'>SumUp</div>
-            <div style='font-size:.62rem;color:#323D54;
+            <div style='font-size:.62rem;font-weight:300;
                         font-family:"DM Mono",monospace;
-                        letter-spacing:.04em;margin-top:2px;'>document intelligence</div>
+                        color:#D8E0F0;letter-spacing:.04em;margin-top:2px;'>Document Intelligence</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
