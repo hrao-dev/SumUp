@@ -16,423 +16,332 @@ st.set_page_config(
 )
 
 # ── CSS ───────────────────────────────────────────────────────────────────────
+# Strategy: style only Streamlit's own rendered elements.
+# No custom HTML card divs — they break due to Streamlit's injected wrappers.
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ── Design tokens ── */
 :root {
-    --bg:           #0A0C10;
-    --bg-deep:      #060709;
-    --surface:      #10141C;
-    --surface-2:    #141820;
-    --surface-3:    #1A1F2B;
-    --border:       #1E2436;
-    --border-mid:   #2A3650;
-    --border-light: #252D40;
-
-    --accent:       #4A7CFA;
-    --accent-soft:  #0D1428;
-    --accent-mid:   #2A4EB0;
-    --accent-dark:  #3560D8;
-    --accent-glow:  rgba(74,124,250,0.20);
-    --accent-text:  #9DB8FF;
-
-    --success:      #2DD4A0;
-    --success-soft: #081E18;
-
-    --info-bg:      #0D1220;
-    --info-border:  #1A2545;
-    --info-text:    #5A7AB0;
-
-    --text-primary:   #D8E0F0;
-    --text-secondary: #6D7D99;
-    --text-muted:     #323D54;
-    --text-inverse:   #060709;
-
-    --shadow-sm:     0 1px 4px rgba(0,0,0,0.5);
-    --shadow-accent: 0 4px 22px rgba(74,124,250,0.28);
-
-    --r-xs:   3px;
-    --r-sm:   6px;
-    --r-md:   8px;
-    --r-lg:   12px;
-    --r-pill: 999px;
+    --ink:       #161510;
+    --ink-2:     #4a4840;
+    --ink-3:     #9a9890;
+    --line:      #e6e3da;
+    --line-2:    #d0cdc4;
+    --bg:        #f8f7f4;
+    --bg-2:      #ffffff;
+    --green:     #2a6348;
+    --green-lt:  #ebf5ef;
+    --green-bd:  #b8ddc8;
+    --teal:      #176070;
+    --teal-lt:   #eaf4f6;
+    --teal-bd:   #b0d8e0;
+    --amber:     #7c5210;
+    --amber-lt:  #fdf4e6;
+    --amber-bd:  #f0d490;
+    --violet:    #3e38a0;
+    --violet-lt: #eeedfb;
+    --violet-bd: #c4c2ee;
+    --f-head:    'DM Serif Display', Georgia, serif;
+    --f-body:    'Inter', system-ui, sans-serif;
+    --f-mono:    'JetBrains Mono', monospace;
 }
 
 /* ── Base ── */
-*, *::before, *::after {
-    font-family: 'DM Sans', system-ui, sans-serif !important;
-    box-sizing: border-box;
-}
 html, body, [class*="css"] {
-    font-family: 'DM Sans', system-ui, sans-serif !important;
-    background: var(--bg) !important;
+    font-family: var(--f-body) !important;
 }
 .stApp { background: var(--bg) !important; }
-#MainMenu, footer, .stDeployButton { display: none !important; }
-[data-testid="stToolbar"]  { display: none !important; }
-[data-testid="stDecoration"] { display: none !important; }
-header[data-testid="stHeader"] {
-    background: var(--bg) !important;
-    border-bottom: 1px solid var(--border) !important;
-}
+#MainMenu, footer, header, .stDeployButton { display: none !important; }
 .block-container {
     padding: 0 0 60px 0 !important;
     max-width: 100% !important;
 }
-[data-testid="stAppViewContainer"],
-[data-testid="stAppViewContainer"] > .main,
-section.main > div {
-    background: var(--bg) !important;
-}
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 2px; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 2px; }
 
 /* ── Header band ── */
 .hdr {
-    background: var(--bg-deep);
-    border-bottom: 1px solid var(--border);
-    padding: 32px 48px 26px;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line);
+    padding: 36px 48px 28px;
     position: relative;
     margin-bottom: 0;
 }
 .hdr::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0; height: 2px;
+    content:'';
+    position:absolute;
+    bottom:0; left:0; right:0; height:3px;
     background: linear-gradient(90deg,
-        #4A7CFA 0%, #7C6AFA 50%, #2DD4A0 100%);
+        #2a6348 0%, #176070 33%, #7c5210 66%, #3e38a0 100%);
 }
 .hdr-eye {
-    font-size: .6rem; font-weight: 500;
-    letter-spacing: .2em; text-transform: uppercase;
-    color: var(--text-muted);
-    font-family: 'DM Mono', monospace !important;
-    margin: 0 0 10px; display: block;
+    font-size: .65rem; font-weight: 600;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: var(--green); margin: 0 0 8px; display: block;
 }
 .hdr-title {
-    font-family: 'DM Sans', system-ui, sans-serif !important;
-    font-size: 2.2rem; font-weight: 600;
-    color: var(--text-primary); line-height: 1.1;
-    margin: 0 0 8px; letter-spacing: -0.04em;
+    font-family: var(--f-head) !important;
+    font-size: 2.6rem; font-weight: 400;
+    color: var(--ink); line-height: 1.06;
+    margin: 0 0 10px; letter-spacing: -.01em;
 }
-.hdr-title em {
-    font-style: normal;
-    color: var(--accent);
-}
+.hdr-title em { font-style: italic; color: var(--green); }
 .hdr-sub {
     font-size: .875rem; font-weight: 400;
-    color: var(--text-secondary); line-height: 1.7;
-    margin: 0 0 16px; max-width: 520px;
+    color: var(--ink-2); line-height: 1.65;
+    margin: 0 0 18px; max-width: 540px;
 }
-.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chips { display:flex; flex-wrap:wrap; gap:6px; }
 .chip {
-    font-size: .58rem; font-weight: 500;
+    font-size: .62rem; font-weight: 600;
     letter-spacing: .1em; text-transform: uppercase;
-    padding: 2px 8px; border-radius: var(--r-pill);
-    border: 1px solid; display: inline-block; line-height: 1.7;
-    font-family: 'DM Mono', monospace !important;
+    padding: 3px 10px; border-radius: 20px;
+    border: 1px solid; display: inline-block; line-height: 1.6;
 }
-.cg { background: var(--accent-soft); color: var(--accent-text); border-color: var(--accent-mid); }
-.ct { background: var(--success-soft); color: var(--success); border-color: #0A3828; }
-.ca { background: var(--surface-3); color: var(--text-secondary); border-color: var(--border-light); }
-.cv { background: var(--surface-2); color: var(--text-muted); border-color: var(--border); }
+.cg { background:var(--green-lt); color:var(--green); border-color:var(--green-bd); }
+.ct { background:var(--teal-lt);  color:var(--teal);  border-color:var(--teal-bd);  }
+.ca { background:var(--amber-lt); color:var(--amber); border-color:var(--amber-bd); }
+.cv { background:var(--violet-lt);color:var(--violet);border-color:var(--violet-bd);}
 
 /* ── Content area ── */
-.content { padding: 24px 40px 0; }
+.content { padding: 28px 40px 0; }
 
-/* ── Section heading ── */
+/* ── Section heading used above output blocks ── */
 .sec-head {
-    font-size: .58rem; font-weight: 500;
-    letter-spacing: .18em; text-transform: uppercase;
-    color: var(--text-muted); margin: 0 0 8px;
+    font-size: .62rem; font-weight: 600;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--ink-3); margin: 0 0 6px;
     display: block;
-    font-family: 'DM Mono', monospace !important;
 }
 
 /* ── Ruled divider ── */
 .rule {
     border: none;
-    border-top: 1px solid var(--border);
-    margin: 20px 0;
+    border-top: 1px solid var(--line);
+    margin: 22px 0;
 }
 
-/* ── Accent rules ── */
-.accent-g { border: none; border-top: 2px solid var(--accent);  margin: 0 0 12px; }
-.accent-t { border: none; border-top: 2px solid var(--success); margin: 0 0 12px; }
-.accent-a { border: none; border-top: 2px solid #7C6AFA;        margin: 0 0 12px; }
-.accent-v { border: none; border-top: 2px solid #2DD4A0;        margin: 0 0 12px; }
+/* ── Accent rule — colored top border as section indicator ── */
+.accent-g { border-top: 2px solid var(--green); margin: 0 0 14px; border-bottom:none; }
+.accent-t { border-top: 2px solid var(--teal);  margin: 0 0 14px; border-bottom:none; }
+.accent-a { border-top: 2px solid var(--amber); margin: 0 0 14px; border-bottom:none; }
+.accent-v { border-top: 2px solid var(--violet);margin: 0 0 14px; border-bottom:none; }
 
 /* ── Textarea ── */
 div[data-testid="stTextArea"] textarea {
-    background: var(--surface-2) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r-md) !important;
-    font-family: 'DM Sans', system-ui, sans-serif !important;
-    font-size: .88rem !important;
-    color: var(--text-primary) !important;
+    background: var(--bg-2) !important;
+    border: 1px solid var(--line-2) !important;
+    border-radius: 8px !important;
+    font-family: var(--f-body) !important;
+    font-size: .9rem !important;
+    color: var(--ink) !important;
     line-height: 1.7 !important;
     transition: border-color .15s !important;
 }
 div[data-testid="stTextArea"] textarea:focus {
-    border-color: var(--accent) !important;
-    box-shadow: 0 0 0 3px var(--accent-glow) !important;
+    border-color: var(--green) !important;
+    box-shadow: 0 0 0 3px rgba(42,99,72,.1) !important;
     outline: none !important;
 }
 div[data-testid="stTextArea"] textarea::placeholder {
-    color: var(--text-muted) !important;
-}
-div[data-testid="stTextArea"] label {
-    font-size: .58rem !important;
-    font-weight: 500 !important;
-    letter-spacing: .16em !important;
-    text-transform: uppercase !important;
-    color: var(--text-muted) !important;
-    font-family: 'DM Mono', monospace !important;
+    color: var(--ink-3) !important;
 }
 
-/* ── Select box ── */
+/* ── Select box (length) ── */
 div[data-testid="stSelectbox"] > div > div {
-    background: var(--surface-2) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r-md) !important;
-    font-family: 'DM Sans', system-ui, sans-serif !important;
-    font-size: .85rem !important;
-    color: var(--text-primary) !important;
+    background: var(--bg-2) !important;
+    border: 1px solid var(--line-2) !important;
+    border-radius: 8px !important;
+    font-family: var(--f-body) !important;
+    font-size: .88rem !important;
+    color: var(--ink) !important;
 }
 div[data-testid="stSelectbox"] > div > div:focus-within {
-    border-color: var(--accent) !important;
-    box-shadow: 0 0 0 3px var(--accent-glow) !important;
+    border-color: var(--green) !important;
+    box-shadow: 0 0 0 3px rgba(42,99,72,.1) !important;
 }
 div[data-testid="stSelectbox"] label {
-    font-size: .58rem !important;
-    font-weight: 500 !important;
-    letter-spacing: .16em !important;
+    font-size: .62rem !important;
+    font-weight: 600 !important;
+    letter-spacing: .18em !important;
     text-transform: uppercase !important;
-    color: var(--text-muted) !important;
-    font-family: 'DM Mono', monospace !important;
+    color: var(--ink-3) !important;
 }
 
 /* ── File uploader ── */
 div[data-testid="stFileUploader"] section {
-    background: var(--accent-soft) !important;
-    border: 1.5px dashed var(--accent-mid) !important;
-    border-radius: var(--r-lg) !important;
-    transition: border-color .15s, background .15s, box-shadow .15s !important;
+    background: var(--bg-2) !important;
+    border: 1.5px dashed var(--line-2) !important;
+    border-radius: 8px !important;
+    transition: border-color .15s, background .15s !important;
 }
 div[data-testid="stFileUploader"] section:hover {
-    border-color: var(--accent) !important;
-    background: var(--accent-soft) !important;
-    box-shadow: 0 0 0 3px var(--accent-glow) !important;
+    border-color: var(--green) !important;
+    background: var(--green-lt) !important;
 }
 div[data-testid="stFileUploader"] label {
-    font-size: .58rem !important;
-    font-weight: 500 !important;
-    letter-spacing: .16em !important;
+    font-size: .62rem !important;
+    font-weight: 600 !important;
+    letter-spacing: .18em !important;
     text-transform: uppercase !important;
-    color: var(--text-muted) !important;
-    font-family: 'DM Mono', monospace !important;
-}
-[data-testid="stFileUploaderDropzone"] {
-    background: var(--accent-soft) !important;
-    border: 1.5px dashed var(--accent-mid) !important;
-    border-radius: var(--r-lg) !important;
-}
-[data-testid="stFileUploaderDropzone"]:hover {
-    border-color: var(--accent) !important;
-    box-shadow: 0 0 0 3px var(--accent-glow) !important;
-}
-[data-testid="stFileUploaderDropzoneInstructions"] span,
-[data-testid="stFileUploaderDropzoneInstructions"] p {
-    color: var(--text-secondary) !important;
-}
-[data-testid="stFileUploaderDropzoneInstructions"] small,
-[data-testid="stFileUploaderDropzoneInstructions"] > div > small {
-    display: none !important;
-}
-[data-testid="stFileUploaderFile"] {
-    background: var(--surface-3) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r-sm) !important;
-}
-[data-testid="stFileUploaderFileName"] {
-    color: var(--text-primary) !important;
+    color: var(--ink-3) !important;
 }
 
 /* ── Buttons ── */
 div[data-testid="stButton"] > button {
-    font-family: 'DM Sans', system-ui, sans-serif !important;
-    font-weight: 500 !important;
-    border-radius: var(--r-md) !important;
+    font-family: var(--f-body) !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
     width: 100% !important;
     transition: all .15s !important;
-    letter-spacing: -.01em !important;
+    letter-spacing: .03em !important;
 }
 div[data-testid="stButton"] > button[kind="primary"] {
-    background: var(--accent) !important;
-    color: var(--text-inverse) !important;
+    background: var(--green) !important;
+    color: #fff !important;
     border: none !important;
-    padding: 11px 20px !important;
-    font-size: .84rem !important;
-    box-shadow: var(--shadow-accent) !important;
+    padding: 12px 20px !important;
+    font-size: .85rem !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,.15), 0 2px 8px rgba(42,99,72,.2) !important;
 }
 div[data-testid="stButton"] > button[kind="primary"]:hover {
-    background: var(--accent-dark) !important;
-    box-shadow: 0 6px 26px rgba(74,124,250,0.4) !important;
+    background: #1e4d38 !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,.15), 0 4px 14px rgba(42,99,72,.28) !important;
     transform: translateY(-1px) !important;
 }
 div[data-testid="stButton"] > button[kind="primary"]:active {
     transform: translateY(0) !important;
 }
 div[data-testid="stButton"] > button[kind="secondary"] {
-    background: var(--surface-2) !important;
-    border: 1px solid var(--border) !important;
-    color: var(--text-secondary) !important;
+    background: var(--bg-2) !important;
+    border: 1px solid var(--line-2) !important;
+    color: var(--ink-2) !important;
     font-size: .82rem !important;
     padding: 9px 20px !important;
 }
 div[data-testid="stButton"] > button[kind="secondary"]:hover {
-    border-color: var(--accent-mid) !important;
-    color: var(--accent-text) !important;
-    background: var(--accent-soft) !important;
+    border-color: var(--green) !important;
+    color: var(--green) !important;
+    background: var(--green-lt) !important;
 }
 
 /* ── st.metric ── */
 div[data-testid="stMetric"] {
-    background: var(--surface) !important;
-    border: 1px solid var(--border-mid) !important;
-    border-radius: var(--r-lg) !important;
+    background: var(--bg-2) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 10px !important;
     padding: 14px 18px !important;
 }
 div[data-testid="stMetric"] label {
-    font-size: .58rem !important;
-    font-weight: 500 !important;
-    letter-spacing: .14em !important;
+    font-size: .65rem !important;
+    font-weight: 600 !important;
+    letter-spacing: .15em !important;
     text-transform: uppercase !important;
-    color: var(--text-muted) !important;
-    font-family: 'DM Mono', monospace !important;
+    color: var(--ink-3) !important;
 }
 div[data-testid="stMetric"] [data-testid="stMetricValue"] {
-    font-family: 'DM Mono', monospace !important;
-    font-size: 1.3rem !important;
-    color: var(--text-primary) !important;
+    font-family: var(--f-mono) !important;
+    font-size: 1.35rem !important;
+    color: var(--ink) !important;
     font-weight: 500 !important;
 }
 div[data-testid="stMetric"] [data-testid="stMetricDelta"] {
-    font-size: .72rem !important;
+    font-size: .75rem !important;
 }
 
 /* ── Expander ── */
 div[data-testid="stExpander"] {
-    background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r-md) !important;
+    background: var(--bg-2) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 8px !important;
 }
 div[data-testid="stExpander"] summary {
     font-size: .82rem !important;
-    font-weight: 500 !important;
-    color: var(--text-secondary) !important;
+    font-weight: 600 !important;
+    color: var(--ink-2) !important;
     padding: 10px 16px !important;
 }
 
-/* ── Alerts ── */
+/* ── Info / success / warning boxes ── */
 div[data-testid="stAlert"] {
-    border-radius: var(--r-md) !important;
-    font-size: .85rem !important;
+    border-radius: 8px !important;
+    font-size: .88rem !important;
 }
-[data-baseweb="notification"][kind="positive"] {
-    background: var(--success-soft) !important;
-    border-color: var(--success) !important;
-    color: var(--success) !important;
-    border-radius: var(--r-md) !important;
-}
-[data-baseweb="notification"][kind="positive"] svg { fill: var(--success) !important; }
 
 /* ── Inline tag pill ── */
 .tag {
     display: inline-block;
-    font-size: .72rem; font-weight: 400;
-    padding: 2px 9px; border-radius: var(--r-pill);
+    font-size: .73rem; font-weight: 500;
+    padding: 2px 9px; border-radius: 20px;
     margin: 0 3px 4px 0;
-    background: var(--accent-soft);
-    border: 1px solid var(--accent-mid);
-    color: var(--accent-text);
-    font-family: 'DM Mono', monospace !important;
+    background: var(--green-lt);
+    border: 1px solid var(--green-bd);
+    color: var(--green);
+    font-family: var(--f-body);
 }
 
 /* ── Monospace value badge ── */
 .val-t {
     display: inline-block;
-    font-family: 'DM Mono', monospace !important;
-    font-size: .76rem;
-    padding: 1px 6px; border-radius: var(--r-xs);
-    background: var(--accent-soft);
-    border: 1px solid var(--accent-mid);
-    color: var(--accent-text);
+    font-family: var(--f-mono); font-size: .78rem;
+    padding: 1px 7px; border-radius: 4px;
+    background: var(--teal-lt);
+    border: 1px solid var(--teal-bd);
+    color: var(--teal);
 }
 .val-a {
     display: inline-block;
-    font-family: 'DM Mono', monospace !important;
-    font-size: .76rem;
-    padding: 1px 6px; border-radius: var(--r-xs);
-    background: var(--surface-3);
-    border: 1px solid var(--border-light);
-    color: var(--text-secondary);
+    font-family: var(--f-mono); font-size: .78rem;
+    padding: 1px 7px; border-radius: 4px;
+    background: var(--amber-lt);
+    border: 1px solid var(--amber-bd);
+    color: var(--amber);
 }
 
 /* ── Sentence highlight ── */
 mark.hl {
-    background: rgba(74,124,250,0.18);
-    border-bottom: 2px solid var(--accent);
+    background: #c6ebd6;
+    border-bottom: 2px solid #68c88e;
     border-radius: 2px;
     padding: 0 2px;
-    color: var(--text-primary);
+    color: var(--ink);
     cursor: help;
 }
 
 /* ── Result output text ── */
 .out {
-    font-size: .9rem; font-weight: 400;
-    color: var(--text-primary); line-height: 1.85;
-    font-family: 'DM Sans', system-ui, sans-serif !important;
+    font-size: .92rem; font-weight: 400;
+    color: var(--ink); line-height: 1.8;
+    font-family: var(--f-body);
 }
 .out p { margin: 0 0 .6em; }
 
 /* ── Placeholder ── */
 .ph {
-    font-size: .84rem; font-style: italic;
-    color: var(--text-muted);
-    font-family: 'DM Sans', system-ui, sans-serif !important;
+    font-size: .85rem; font-style: italic;
+    color: var(--ink-3); font-family: var(--f-body);
 }
 
-/* ── Stat block ── */
+/* ── Stat block for reading level ── */
 .stat {
     display: flex; align-items: baseline;
     gap: 8px; flex-wrap: wrap;
     margin-bottom: 10px;
 }
 .stat-lbl {
-    font-size: .75rem; font-weight: 500;
-    color: var(--text-secondary); min-width: 100px;
-    font-family: 'DM Sans', system-ui, sans-serif !important;
+    font-size: .75rem; font-weight: 600;
+    color: var(--ink-2); min-width: 100px;
+    font-family: var(--f-body);
 }
 .stat-note {
-    font-size: .72rem; color: var(--text-muted);
-    font-family: 'DM Sans', system-ui, sans-serif !important;
+    font-size: .72rem; color: var(--ink-3);
+    font-family: var(--f-body);
 }
 .stat-delta {
-    font-size: .72rem; font-weight: 500;
-    color: var(--accent-text);
-    font-family: 'DM Mono', monospace !important;
-}
-
-/* ── Streamlit markdown text visibility ── */
-[data-testid="stMarkdownContainer"] p,
-[data-testid="stMarkdownContainer"] li,
-[data-testid="stMarkdownContainer"] span {
-    color: var(--text-primary) !important;
+    font-size: .72rem; font-weight: 600;
+    color: var(--green); font-family: var(--f-body);
 }
 </style>
 """, unsafe_allow_html=True)
@@ -459,7 +368,9 @@ def split_text(text, max_tokens=512):
         yield ' '.join(words[i:i + max_tokens])
 
 def clean_text(text):
-    text = ' '.join(text.split())
+    import re
+    # Collapse all whitespace including newlines from PDF extraction
+    text = re.sub(r'\s+', ' ', text).strip()
     return ' '.join(w for w in text.split() if len(w) < 100)
 
 def fetch_article(url):
@@ -502,9 +413,19 @@ def compute_rouge(src, summ):
     return s['rouge1'], s['rouge2'], s['rougeL']
 
 def highlight_sentences(src, summ, top_n=3):
-    sc   = rouge_scorer.RougeScorer(['rouge1'], use_stemmer=True)
-    doc  = nlp(src[:8000])
-    sens = [s.text.strip() for s in doc.sents if len(s.text.strip()) > 20]
+    sc = rouge_scorer.RougeScorer(['rouge1'], use_stemmer=True)
+
+    # Normalize whitespace — PDFs often have newlines after every word.
+    # Collapse all whitespace runs (including \n, \r, \t) to single spaces.
+    import re
+    src_clean = re.sub(r'\s+', ' ', src).strip()
+
+    doc  = nlp(src_clean[:8000])
+    # Filter: must be >30 chars and contain at least 4 words to be a real sentence
+    sens = [
+        s.text.strip() for s in doc.sents
+        if len(s.text.strip()) > 30 and len(s.text.strip().split()) >= 4
+    ]
     if not sens: return []
     scored = [(s, sc.score(summ, s)['rouge1'].fmeasure) for s in sens]
     thresh = sorted([v for _,v in scored], reverse=True)[min(top_n-1, len(scored)-1)]
@@ -583,6 +504,8 @@ st.markdown("""
 # ══════════════════════════════════════════════════════════════════════════════
 # SIDEBAR
 # ══════════════════════════════════════════════════════════════════════════════
+
+# Initialize clear flag
 if "do_clear" not in st.session_state:
     st.session_state.do_clear = False
 
@@ -590,10 +513,10 @@ with st.sidebar:
     st.markdown("""
     <style>
     section[data-testid="stSidebar"] {
-        background: #060709 !important;
-        border-right: 1px solid #1E2436 !important;
-        min-width: 300px !important;
-        max-width: 340px !important;
+        background: #ffffff !important;
+        border-right: 1px solid #e6e3da !important;
+        min-width: 320px !important;
+        max-width: 360px !important;
     }
     section[data-testid="stSidebar"] > div,
     section[data-testid="stSidebar"] > div > div,
@@ -602,7 +525,7 @@ with st.sidebar:
         margin-top: 0 !important;
     }
     section[data-testid="stSidebar"] .block-container {
-        padding: 24px 18px 40px !important;
+        padding: 186px 20px 40px !important;
     }
     section[data-testid="stSidebar"],
     section[data-testid="stSidebar"] p,
@@ -612,33 +535,23 @@ with st.sidebar:
     section[data-testid="stSidebar"] input,
     section[data-testid="stSidebar"] textarea,
     section[data-testid="stSidebar"] button {
-        font-family: 'DM Sans', system-ui, sans-serif !important;
+        font-family: 'Inter', system-ui, sans-serif !important;
     }
     </style>
     """, unsafe_allow_html=True)
 
-    # Sidebar logo / wordmark
     st.markdown("""
-    <div style='display:flex;align-items:center;gap:9px;
-                margin-bottom:18px;padding-bottom:14px;
-                border-bottom:1px solid #1E2436;'>
-        <div style='width:30px;height:30px;
-                    background:#0D1428;
-                    border:1px solid #2A4EB0;
-                    border-radius:6px;
-                    display:flex;align-items:center;justify-content:center;
-                    font-family:"DM Mono",monospace;
-                    font-size:.72rem;font-weight:500;
-                    color:#9DB8FF;letter-spacing:.04em;flex-shrink:0;'>SU</div>
-        <div>
-            <div style='font-size:.95rem;font-weight:600;
-                        color:#D8E0F0;letter-spacing:-.025em;line-height:1.2;'>SumUp</div>
-            <div style='font-size:.62rem;font-weight:300;
-                        font-family:"DM Mono",monospace;
-                        color:#D8E0F0;letter-spacing:.04em;margin-top:2px;'>Document Intelligence</div>
-        </div>
+    <div style='margin-bottom:18px'>
+        <p style='font-size:1rem;font-weight:600;color:#161510;margin:0'>
+            Start here
+        </p>
     </div>
+    <hr style='border:none;border-top:1px solid #e6e3da;margin:0 0 18px'>
     """, unsafe_allow_html=True)
+
+    # ── All inputs — read every rerun, store in session state ─────────────────
+    # Using session state storage means the Summarize button always reads
+    # the latest values regardless of which rerun triggered it.
 
     text_val = st.text_area(
         "Paste text or a URL",
@@ -660,9 +573,9 @@ with st.sidebar:
     )
     st.session_state.pending_file = file_val
 
-    st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
     st.markdown(
-        "<hr style='border:none;border-top:1px solid #1E2436;margin:0 0 14px'>",
+        "<hr style='border:none;border-top:1px solid #e6e3da;margin:0 0 16px'>",
         unsafe_allow_html=True,
     )
 
@@ -677,17 +590,18 @@ with st.sidebar:
     )
     st.session_state.pending_length = length_val
 
-    st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:24px'></div>", unsafe_allow_html=True)
     st.markdown(
-        "<hr style='border:none;border-top:1px solid #1E2436;margin:0 0 18px'>",
+        "<hr style='border:none;border-top:1px solid #e6e3da;margin:0 0 20px'>",
         unsafe_allow_html=True,
     )
 
+    # ── Buttons — side by side, Summarize dominant ────────────────────────────
     btn_col, clr_col = st.columns([1, 1], gap="small")
 
     with btn_col:
         if st.button(
-            "Summarize",
+            "Summarize →",
             type="primary",
             use_container_width=True,
             key="btn_summarize",
@@ -703,16 +617,16 @@ with st.sidebar:
         ):
             st.session_state.do_clear = True
 
-    st.markdown("<div style='height:24px'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
     st.markdown(
-        "<hr style='border:none;border-top:1px solid #1E2436;margin:0 0 12px'>",
+        "<hr style='border:none;border-top:1px solid #e6e3da;margin:0 0 14px'>",
         unsafe_allow_html=True,
     )
     st.markdown(
-        "<p style='font-size:.68rem;color:#323D54;line-height:1.65;font-family:\"DM Mono\",monospace;'>"
-        "Fine-tuned FLAN-T5 · "
+        "<p style='font-size:.72rem;color:#9a9890;line-height:1.65'>"
+        "Powered by a fine-tuned FLAN-T5 model · "
         "<a href='https://huggingface.co/harao-ml/flant5-finetuned-summarize' "
-        "target='_blank' style='color:#4A7CFA;text-decoration:none;'>"
+        "target='_blank' style='color:#2a6348;text-decoration:none'>"
         "harao-ml/flant5-finetuned-summarize ↗</a>"
         "</p>",
         unsafe_allow_html=True,
@@ -722,18 +636,24 @@ with st.sidebar:
 if st.session_state.do_clear:
     st.session_state.do_clear     = False
     st.session_state.do_summarize = False
+    # Reset all results
     for k in RESULT_KEYS:
         st.session_state[k] = None
+    # Reset pending input mirrors
     st.session_state.pending_text   = ""
     st.session_state.pending_file   = None
     st.session_state.pending_length = "Balanced"
+    # Increment file uploader key — forces Streamlit to render a brand new
+    # file_uploader widget, which is the only reliable way to clear it visually
     st.session_state.file_uploader_key += 1
+    # Delete static widget keys so they reset to defaults
     for k in INPUT_KEYS:
         if k in st.session_state:
             del st.session_state[k]
     st.rerun()
 
 # ── Summarize handler ─────────────────────────────────────────────────────────
+# Always reads from session state mirrors — consistent for both input types
 if st.session_state.do_summarize:
     st.session_state.do_summarize = False
 
@@ -741,12 +661,18 @@ if st.session_state.do_summarize:
     err      = None
     url_meta = None
 
+    # Read from session state mirrors — not from widget variables directly
     active_file   = st.session_state.pending_file
     active_text   = st.session_state.pending_text.strip()
     active_length = st.session_state.pending_length
     min_len, max_len = LENGTH_MAP[active_length]
 
+    # ── Resolve content ───────────────────────────────────────────────────────
+    # Priority: text/URL wins if the user has typed anything.
+    # File only used when text box is empty.
+    # This prevents a stale uploaded file from shadowing freshly typed input.
     if active_text:
+        # Text or URL input — ignore any uploaded file
         if active_text.startswith("http://") or active_text.startswith("https://"):
             with st.spinner("Fetching article…"):
                 title, author, pub_date, fetched = fetch_article(active_text)
@@ -762,6 +688,7 @@ if st.session_state.do_summarize:
             content = active_text
 
     elif active_file is not None:
+        # File upload — only reached when text box is empty
         try:
             if active_file.name.endswith(".pdf"):
                 reader  = PyPDF2.PdfReader(active_file)
@@ -776,8 +703,10 @@ if st.session_state.do_summarize:
     else:
         err = "Please paste some text, enter a URL, or upload a file first."
 
+    # ── Run pipeline ──────────────────────────────────────────────────────────
     if err:
         st.session_state.error = err
+        # Clear any stale results so the error shows cleanly
         for k in ["summary","content","insights","rouge","highlight","reading","url_meta"]:
             st.session_state[k] = None
     elif content:
@@ -801,7 +730,7 @@ if st.session_state.do_summarize:
         ))
 
 # ══════════════════════════════════════════════════════════════════════════════
-# MAIN — Output area
+# MAIN — Output area (full width, stacked sections)
 # ══════════════════════════════════════════════════════════════════════════════
 main = st.container()
 
@@ -811,88 +740,88 @@ with main:
     if st.session_state.error:
         st.error(st.session_state.error)
 
-    # ── Empty state ───────────────────────────────────────────────────────────
+    # ── Empty state call-to-action ────────────────────────────────────────────
     if not st.session_state.summary and not st.session_state.error:
         st.markdown("""
         <div style='
             margin: 40px auto 48px;
-            max-width: 480px;
+            max-width: 520px;
             text-align: center;
-            padding: 40px 36px;
-            background: #10141C;
-            border: 1px solid #1E2436;
-            border-radius: 10px;
+            padding: 48px 40px;
+            background: #ffffff;
+            border: 1px solid #e6e3da;
+            border-radius: 14px;
         '>
             <div style='
-                width:44px;height:44px;
-                background:#0D1428;
-                border:1px solid #2A4EB0;
-                border-radius:10px;
-                display:flex;align-items:center;justify-content:center;
-                font-family:"DM Mono",monospace;
-                font-size:.9rem;font-weight:500;color:#9DB8FF;
-                margin:0 auto 16px;
-            '>SU</div>
+                font-size: 2.4rem;
+                margin-bottom: 16px;
+                line-height: 1;
+            '>📄</div>
             <p style='
-                font-family:"DM Sans",system-ui,sans-serif;
-                font-size:1.1rem;
-                font-weight:600;
-                color:#D8E0F0;
-                margin: 0 0 8px;
-                letter-spacing:-.02em;
+                font-family: DM Serif Display, Georgia, serif;
+                font-size: 1.45rem;
+                font-weight: 400;
+                color: #161510;
+                margin: 0 0 10px;
+                line-height: 1.25;
             '>Ready to summarize</p>
             <p style='
-                font-size: .84rem;
-                color: #6D7D99;
+                font-size: .88rem;
+                color: #4a4840;
                 margin: 0 0 24px;
-                line-height: 1.7;
+                line-height: 1.65;
             '>
                 Use the panel on the left to paste text, drop in a URL,
                 or upload a PDF or TXT file. Then click
-                <strong style="color:#4A7CFA">Summarize</strong>
+                <strong style="color:#2a6348">Summarize →</strong>
             </p>
-            <div style='display:flex;flex-direction:column;gap:8px;text-align:left;'>
+            <div style='
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                text-align: left;
+            '>
                 <div style='
-                    display:flex;align-items:flex-start;gap:10px;
-                    background:#14181F;border:1px solid #1E2436;
-                    border-radius:6px;padding:10px 12px;
+                    display: flex; align-items: flex-start; gap: 12px;
+                    background: #f8f7f4; border-radius: 8px; padding: 12px 14px;
                 '>
+                    <span style='font-size:1rem;margin-top:1px'>✍️</span>
                     <div>
-                        <p style='font-size:.78rem;font-weight:500;color:#D8E0F0;margin:0 0 2px'>
+                        <p style='font-size:.8rem;font-weight:600;color:#161510;margin:0 0 2px'>
                             Paste text or a URL
                         </p>
-                        <p style='font-size:.72rem;color:#6D7D99;margin:0;line-height:1.5'>
+                        <p style='font-size:.75rem;color:#9a9890;margin:0;line-height:1.5'>
                             Article links, research content, any long-form text
                         </p>
                     </div>
                 </div>
                 <div style='
-                    display:flex;align-items:flex-start;gap:10px;
-                    background:#14181F;border:1px solid #1E2436;
-                    border-radius:6px;padding:10px 12px;
+                    display: flex; align-items: flex-start; gap: 12px;
+                    background: #f8f7f4; border-radius: 8px; padding: 12px 14px;
                 '>
+                    <span style='font-size:1rem;margin-top:1px'>📁</span>
                     <div>
-                        <p style='font-size:.78rem;font-weight:500;color:#D8E0F0;margin:0 0 2px'>
+                        <p style='font-size:.8rem;font-weight:600;color:#161510;margin:0 0 2px'>
                             Upload a file
                         </p>
-                        <p style='font-size:.72rem;color:#6D7D99;margin:0;line-height:1.5'>
+                        <p style='font-size:.75rem;color:#9a9890;margin:0;line-height:1.5'>
                             PDF or TXT — up to full document length
                         </p>
                     </div>
                 </div>
                 <div style='
-                    display:flex;align-items:flex-start;gap:10px;
-                    background:#0D1428;
-                    border:1px solid #2A4EB0;
-                    border-radius:6px;padding:10px 12px;
+                    display: flex; align-items: flex-start; gap: 12px;
+                    background: #eef6f1; border: 1px solid #b8ddc8;
+                    border-radius: 8px; padding: 12px 14px;
                 '>
+                    <span style='font-size:1rem;margin-top:1px'>⚡</span>
                     <div>
-                        <p style='font-size:.78rem;font-weight:500;color:#9DB8FF;margin:0 0 2px'>
-                            Click Summarize
+                        <p style='font-size:.8rem;font-weight:600;color:#2a6348;margin:0 0 2px'>
+                            Click Summarize →
                         </p>
-                        <p style='font-size:.72rem;color:#4A6080;margin:0;line-height:1.5'>
+                        <p style='font-size:.75rem;color:#4a7a60;margin:0;line-height:1.5'>
                             Runs summarization, NER, ROUGE scoring,
-                            sentence highlighting &amp; reading level analysis
+                            sentence highlighting & reading level analysis
                         </p>
                     </div>
                 </div>
@@ -930,9 +859,8 @@ with main:
             kwds, ents, lmap = st.session_state.insights
 
             st.markdown(
-                "<p style='font-size:.58rem;font-weight:500;letter-spacing:.14em;"
-                "text-transform:uppercase;color:#323D54;margin:0 0 8px;"
-                "font-family:\"DM Mono\",monospace;'>Key Phrases</p>",
+                "<p style='font-size:.68rem;font-weight:600;letter-spacing:.12em;"
+                "text-transform:uppercase;color:#9a9890;margin:0 0 8px'>Key Phrases</p>",
                 unsafe_allow_html=True,
             )
             if kwds:
@@ -945,20 +873,18 @@ with main:
 
             st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
             st.markdown(
-                "<p style='font-size:.58rem;font-weight:500;letter-spacing:.14em;"
-                "text-transform:uppercase;color:#323D54;margin:0 0 8px;"
-                "font-family:\"DM Mono\",monospace;'>Named Entities</p>",
+                "<p style='font-size:.68rem;font-weight:600;letter-spacing:.12em;"
+                "text-transform:uppercase;color:#9a9890;margin:0 0 8px'>Named Entities</p>",
                 unsafe_allow_html=True,
             )
             if ents:
                 for lb, items in ents.items():
                     name = lmap.get(lb, lb)
                     st.markdown(
-                        f"<p style='font-size:.85rem;margin:0 0 5px;line-height:1.5;"
-                        f"color:var(--text-primary);'>"
-                        f"<span style='font-weight:500;color:#9DB8FF'>{name}</span>"
-                        f"<span style='color:#323D54'> — </span>"
-                        f"<span style='color:#D8E0F0'>{', '.join(items)}</span></p>",
+                        f"<p style='font-size:.87rem;margin:0 0 5px;line-height:1.5'>"
+                        f"<span style='font-weight:600;color:#4a4840'>{name}</span>"
+                        f"<span style='color:#9a9890'> — </span>"
+                        f"<span style='color:#161510'>{', '.join(items)}</span></p>",
                         unsafe_allow_html=True,
                     )
             else:
@@ -976,16 +902,14 @@ with main:
 
             def rrow(label, sc):
                 return (
-                    f"<p style='font-size:.85rem;margin:0 0 10px;line-height:1.5;'>"
-                    f"<span style='font-weight:500;color:#9DB8FF;"
-                    f"display:inline-block;width:30px;font-family:\"DM Mono\",monospace;'>{label}</span>"
+                    f"<p style='font-size:.87rem;margin:0 0 10px;line-height:1.5'>"
+                    f"<span style='font-weight:600;color:#4a4840;display:inline-block;width:30px'>{label}</span>"
                     f"&nbsp;<span class='val-t'>{sc.fmeasure:.3f}</span>"
-                    f"&nbsp;<span style='font-size:.72rem;color:#323D54;"
-                    f"font-family:\"DM Mono\",monospace;'>{ubar(sc.fmeasure)}</span>"
-                    f"<br><span style='font-size:.7rem;color:#323D54;"
-                    f"margin-left:34px;font-family:\"DM Mono\",monospace;'>"
-                    f"Precision&thinsp;<span class='val-a'>{sc.precision:.3f}</span>"
-                    f"&nbsp;&nbsp;Recall&thinsp;<span class='val-a'>{sc.recall:.3f}</span>"
+                    f"&nbsp;<span style='font-size:.75rem;color:#9a9890;font-family:var(--f-mono)'>"
+                    f"{ubar(sc.fmeasure)}</span>"
+                    f"<br><span style='font-size:.72rem;color:#9a9890;margin-left:34px'>"
+                    f"Precision&thinsp;<span class='val-t'>{sc.precision:.3f}</span>"
+                    f"&nbsp;&nbsp;Recall&thinsp;<span class='val-t'>{sc.recall:.3f}</span>"
                     f"</span></p>"
                 )
 
@@ -993,8 +917,7 @@ with main:
             st.markdown(rrow("R-2", r2), unsafe_allow_html=True)
             st.markdown(rrow("R-L", rL), unsafe_allow_html=True)
             st.markdown(
-                "<p style='font-size:.7rem;color:#323D54;font-style:italic;margin-top:6px;"
-                "font-family:\"DM Mono\",monospace;'>"
+                "<p style='font-size:.72rem;color:#9a9890;font-style:italic;margin-top:6px'>"
                 "Higher F1 = more source content preserved</p>",
                 unsafe_allow_html=True,
             )
@@ -1010,9 +933,8 @@ with main:
 
     if st.session_state.highlight:
         st.markdown(
-            "<p style='font-size:.72rem;color:#323D54;font-style:italic;margin:0 0 12px;"
-            "font-family:\"DM Mono\",monospace;'>"
-            "<mark class='hl' style='font-style:normal;font-size:.7rem;padding:1px 5px'>"
+            "<p style='font-size:.75rem;color:#9a9890;font-style:italic;margin:0 0 12px'>"
+            "<mark class='hl' style='font-style:normal;font-size:.72rem;padding:1px 5px'>"
             "Highlighted</mark>&nbsp; sentences contributed most to the summary</p>",
             unsafe_allow_html=True,
         )
@@ -1022,7 +944,7 @@ with main:
             if is_hl:
                 parts.append(f'<mark class="hl" title="Relevance: {score:.3f}">{esc}</mark>')
             else:
-                parts.append(f'<span style="color:#6D7D99">{esc}</span>')
+                parts.append(f'<span>{esc}</span>')
         st.markdown(
             f"<div class='out'>{' '.join(parts)}</div>",
             unsafe_allow_html=True,
@@ -1034,7 +956,7 @@ with main:
     # ── 4. READING LEVEL ──────────────────────────────────────────────────────
     st.markdown('<hr class="rule">', unsafe_allow_html=True)
     st.markdown('<hr class="accent-a">', unsafe_allow_html=True)
-    st.markdown('<span class="sec-head">Reading Level &amp; Compression</span>',
+    st.markdown('<span class="sec-head">Reading Level & Compression</span>',
                 unsafe_allow_html=True)
 
     if st.session_state.reading:
@@ -1070,8 +992,7 @@ with main:
             )
 
         st.markdown(
-            f"<p style='font-size:.7rem;color:#323D54;margin-top:10px;"
-            f"font-family:\"DM Mono\",monospace;'>"
+            f"<p style='font-size:.75rem;color:#9a9890;margin-top:10px'>"
             f"Source: {r['gls']} ({r['els']}) &nbsp;·&nbsp; "
             f"Summary: {r['glu']} ({r['elu']}) &nbsp;·&nbsp; "
             f"Flesch-Kincaid: lower grade = more accessible</p>",
